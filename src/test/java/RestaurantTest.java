@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,4 +60,31 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>CalculateOrderTotal<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    public void calculate_order_total_should_return_zero_when_no_items_selected(){
+        LocalTime openingTime = LocalTime.parse("10:30:00");
+        LocalTime closingTime = LocalTime.parse("22:00:00");
+        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        restaurant.addToMenu("Sweet corn soup",119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
+        restaurant.addToMenu("Sizzling brownie",319);
+
+        assertEquals(0,restaurant.calculateOrderTotal(null));
+    }
+
+    @Test
+    public void calculate_order_total_should_return_expected_total(){
+        LocalTime openingTime = LocalTime.parse("10:30:00");
+        LocalTime closingTime = LocalTime.parse("22:00:00");
+        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        restaurant.addToMenu("Sweet corn soup",119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
+        restaurant.addToMenu("Sizzling brownie",319);
+
+        assertEquals(388,restaurant.calculateOrderTotal(Arrays.asList("Sweet corn soup","Vegetable lasagne")));
+    }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<CalculateOrderTotal>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
