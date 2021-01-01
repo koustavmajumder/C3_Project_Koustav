@@ -64,4 +64,14 @@ public class Restaurant {
         return name;
     }
 
+    public int calculateOrderTotal(List<String> itemNameList) {
+        int orderTotal=0;
+        if(itemNameList !=null && itemNameList.stream().count()>0){
+            for (String itemName: itemNameList) {
+                if(itemName!=null && !itemName.isEmpty() && this.getMenu().stream().filter(i->i.getName().equalsIgnoreCase(itemName)).findAny().isPresent())
+                    orderTotal+=this.findItemByName(itemName).getPrice();
+            }
+        }
+        return orderTotal;
+    }
 }
